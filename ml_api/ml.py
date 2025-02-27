@@ -1,7 +1,11 @@
 import pandas as pd
 from fpgrowth_py import fpgrowth
 import json
-df = pd.read_csv("/project2-pv2/datasets/spotify/2023_spotify_ds1.csv")  
+import os
+dataset_path = os.getenv("DATASET_PATH", "/project2-pv2/datasets/spotify/2023_spotify_ds1.csv")
+
+# 读取数据集
+df = pd.read_csv(dataset_path)
 
 #print(df.columns)
 #print(df.head())

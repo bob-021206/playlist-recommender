@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: playlist-recommender
+  name: playlist-recommender-ds1
 spec:
   replicas: 1
   selector:
@@ -18,11 +18,14 @@ spec:
             claimName: project2-pvc2-binyan  # 引用 PersistentVolumeClaim
       containers:
         - name: ml-api
-          image: quay.io/bob1206/ml_api2:0.2  # 从 Quay.io 拉取镜像
+          image: quay.io/bob1206/ml_api2:0.3  # 从 Quay.io 拉取镜像
           volumeMounts:
             - name: dataset-storage
               mountPath: /project2-pv2  # 挂载数据集的路径
           command: ["python", "ml.py"]  # 运行 ml.py 生成规则
+          envFrom:
+            - configMapRef:
+                name: dataset-config  # 将 ConfigMap 中的环境变量注入容器
         
         - name: frontend
           image: quay.io/bob1206/frontend2:0.2  # 从 Quay.io 拉取镜像
