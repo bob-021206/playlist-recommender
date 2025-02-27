@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: playlist-recommender
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: binyan-playlist-recommender
+  template:
+    metadata:
+      labels:
+        app: binyan-playlist-recommender
+    spec:
+      volumes:
+        - name: dataset-storage
+          persistentVolumeClaim:
+            claimName: project2-pvc2-binyan  # 引用 PersistentVolumeClaim
+      containers:
+        - name: ml-api
+          image: quay.io/bob1206/ml_api2:0.2  # 从 Quay.io 拉取镜像
+          volumeMounts:
+            - name: dataset-storage
+              mountPath: /project2-pv2  # 挂载数据集的路径
+          command: ["python", "ml.py"]  # 运行 ml.py 生成规则
+        
+        - name: frontend
+          image: quay.io/bob1206/frontend2:0.2  # 从 Quay.io 拉取镜像
+          ports:
+            - containerPort: 52005
+          volumeMounts:
+            - name: dataset-storage
+              mountPath: /project2-pv2  # 挂载 play_list.json 文件的路径
+          command: ["python", "app.py"]  # 运行 Flask 服务器

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Playlist Recommender</title>
+    <script>
+        async function getRecommendations() {
+            const inputSongs = document.getElementById("songs").value.split(",");
+            const response = await fetch("/api/recommender", {
+                method: "POST",
+                headers: {"Content-Type": "application/json"},
+                body: JSON.stringify({"songs": inputSongs})
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                document.getElementById("result").innerHTML = 
+                    `<h3>Recommended Songs:</h3><p>${data.songs.join(", ")}</p>`;
+            } else {
+                document.getElementById("result").innerHTML = 
+                    `<p style="color:red;">Error: ${data.error}</p>`;
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>Playlist Recommender</h1>
+    <label for="songs">Enter Songs (comma separated):</label>
+    <input type="text" id="songs" placeholder="E.g. Yesterday, Bohemian Rhapsody">
+    <button onclick="getRecommendations()">Get Recommendations</button>
+    <div id="result"></div>
+</body>
+</html>
