@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: playlist-recommender-ds1
+  name: playlist-recommender-ds2
 spec:
   replicas: 1
   selector:

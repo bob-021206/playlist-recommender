@@ -4,5 +4,5 @@ metadata:
   name: dataset-config
   namespace: binyan
 data:
-  DATASET_PATH: "/project2-pv2/datasets/spotify/2023_spotify_ds1.csv"  # 这是 PVC 挂载后的路径
+  DATASET_PATH: "/project2-pv2/datasets/spotify/2023_spotify_ds2.csv"  # 这是 PVC 挂载后的路径
 

@@ -2,7 +2,7 @@ import pandas as pd
 from fpgrowth_py import fpgrowth
 import json
 import os
-dataset_path = os.getenv("DATASET_PATH", "/project2-pv2/datasets/spotify/2023_spotify_ds1.csv")
+dataset_path = os.getenv("DATASET_PATH", "/project2-pv2/datasets/spotify/2023_spotify_ds2.csv")
 
 # 读取数据集
 df = pd.read_csv(dataset_path)
